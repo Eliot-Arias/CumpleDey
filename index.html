@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DEYSI FEST - Invitación de Cumpleaños</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f8f9fa;
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: #333;
+    }
+
+    .stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .star {
+      position: absolute;
+      color: #d3d3d3;
+      animation: twinkle 2s infinite;
+      font-size: 12px;
+    }
+
+    @keyframes twinkle {
+
+      0%,
+      100% {
+        opacity: 0.3;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.8;
+        transform: scale(1.1);
+      }
+    }
+
+    .disco-ball {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background: radial-gradient(circle at 30% 30%, #ffffff, #c0c0c0, #808080);
+      border-radius: 50%;
+      animation: rotate 4s linear infinite, float 3s ease-in-out infinite;
+      box-shadow: 0 0 15px rgba(192, 192, 192, 0.4);
+      border: 1px solid #999;
+    }
+
+    .disco-ball::before {
+      content: '';
+      position: absolute;
+      top: 10%;
+      left: 10%;
+      width: 80%;
+      height: 80%;
+      background: repeating-conic-gradient(from 0deg, silver 0deg 10deg, gray 10deg 20deg);
+      border-radius: 50%;
+      opacity: 0.7;
+    }
+
+    @keyframes rotate {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0px);
+      }
+
+      50% {
+        transform: translateY(-8px);
+      }
+    }
+
+    .disco-ball-1 {
+      top: 10%;
+      right: 15%;
+      animation-delay: 0s;
+    }
+
+    .disco-ball-2 {
+      top: 20%;
+      left: 10%;
+      animation-delay: 1s;
+    }
+
+    .disco-ball-3 {
+      bottom: 20%;
+      right: 20%;
+      animation-delay: 2s;
+    }
+
+    .disco-ball-4 {
+      bottom: 30%;
+      left: 15%;
+      animation-delay: 1.5s;
+    }
+
+    .main-container {
+      position: relative;
+      z-index: 10;
+      min-height: 100vh;
+      padding: 20px 0;
+    }
+
+    .invitation-card {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      border: 1px solid #e9ecef;
+      overflow: hidden;
+      margin: 20px auto;
+      max-width: 500px;
+    }
+
+    .header-section {
+      text-align: center;
+      padding: 40px 30px 30px;
+      background: white;
+      color: #333;
+      position: relative;
+    }
+
+    .bow {
+      font-size: 3rem;
+      color: #e91e63;
+      margin-bottom: 15px;
+      filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.1));
+    }
+
+    .main-title {
+      font-size: 3.5rem;
+      font-weight: 800;
+      letter-spacing: 3px;
+      margin: 15px 0;
+      color: #333;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: #666;
+      font-weight: 400;
+      margin: 5px 0;
+    }
+
+    .content-section {
+      padding: 30px;
+      background: white;
+    }
+
+    .calendar-section {
+      text-align: center;
+      margin: 30px 0;
+      padding: 25px;
+      background: white;
+      border: 2px solid #f0f0f0;
+      border-radius: 15px;
+    }
+
+    .calendar-container {
+      max-width: 300px;
+      margin: 0 auto;
+    }
+
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .calendar-day-header {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #666;
+      padding: 8px 4px;
+      text-align: center;
+    }
+
+    .calendar-day {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      color: #333;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .calendar-day:hover {
+      background: #f8f9fa;
+    }
+
+    .calendar-day.other-month {
+      color: #ccc;
+    }
+
+    .calendar-day.event-day {
+      background: #e91e63;
+      color: white;
+      font-weight: 700;
+      transform: scale(1.1);
+      box-shadow: 0 4px 12px rgba(233, 30, 99, 0.3);
+    }
+
+    .countdown-container {
+      text-align: center;
+      margin: 30px 0;
+      padding: 25px;
+      background: #fafafa;
+      border-radius: 15px;
+      border: 1px solid #e9ecef;
+    }
+
+    .countdown-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .countdown-timer {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .time-unit {
+      background: white;
+      padding: 15px 12px;
+      border-radius: 12px;
+      min-width: 70px;
+      border: 1px solid #e9ecef;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .time-number {
+      font-size: 1.8rem;
+      font-weight: 700;
+      display: block;
+      color: #e91e63;
+    }
+
+    .time-label {
+      font-size: 0.8rem;
+      color: #666;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    .event-details {
+      background: white;
+      border: 2px solid #f0f0f0;
+      padding: 25px;
+      border-radius: 15px;
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .event-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .event-info {
+      font-size: 1.1rem;
+      margin: 15px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: #333;
+    }
+
+    .event-info i {
+      color: #666;
+      width: 20px;
+    }
+
+    .location-btn {
+      background: #e91e63;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 25px;
+      font-weight: 600;
+      margin-top: 15px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .location-btn:hover {
+      background: #c2185b;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(233, 30, 99, 0.3);
+      color: white;
+    }
+
+    .dress-code {
+      background: white;
+      border: 2px solid #f0f0f0;
+      padding: 25px;
+      border-radius: 15px;
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .dress-code-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: #333;
+    }
+
+    .dress-code-title i {
+      color: #666;
+    }
+
+    .dress-code-text {
+      font-size: 1rem;
+      line-height: 1.6;
+      margin: 10px 0;
+      color: #333;
+    }
+
+    .ambiente-section {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 2px solid #f0f0f0;
+    }
+
+    .ambiente-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .party-icons {
+      font-size: 2rem;
+      margin: 15px 0;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      color: #666;
+    }
+
+    .footer-section {
+      text-align: center;
+      padding: 30px;
+      background: #fafafa;
+      border-top: 1px solid #e9ecef;
+    }
+
+    .rsvp-text {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: #333;
+    }
+
+    .confirmar-btn {
+      background: #e91e63;
+      margin-bottom: 20px;
+      color: white;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 25px;
+      font-weight: 600;
+      margin-top: 15px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .confirmar-btn:hover {
+      background: #c2185b;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(233, 30, 99, 0.3);
+      color: white;
+    }
+
+    .contact-info {
+      font-size: 1rem;
+      color: #666;
+      line-height: 1.6;
+    }
+
+    .contact-info i {
+      color: #e91e63;
+      margin-right: 8px;
+    }
+
+    @media (max-width: 768px) {
+      .main-title {
+        font-size: 2.5rem;
+        letter-spacing: 2px;
+      }
+
+      .countdown-timer {
+        gap: 10px;
+      }
+
+      .time-unit {
+        min-width: 60px;
+        padding: 12px 8px;
+      }
+
+      .time-number {
+        font-size: 1.4rem;
+      }
+
+      .disco-ball {
+        width: 35px;
+        height: 35px;
+      }
+
+      .calendar-grid {
+        gap: 4px;
+      }
+
+      .calendar-day {
+        font-size: 0.8rem;
+      }
+    }
+
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.02);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Estrellas animadas -->
+  <div class="stars" id="stars"></div>
+
+  <!-- Bolas de disco -->
+  <div class="disco-ball disco-ball-1"></div>
+  <div class="disco-ball disco-ball-2"></div>
+  <div class="disco-ball disco-ball-3"></div>
+  <div class="disco-ball disco-ball-4"></div>
+
+  <div class="main-container">
+    <div class="container">
+      <div class="invitation-card">
+        <!-- Header -->
+        <div class="header-section">
+          <div class="bow">🎀</div>
+          <h1 class="main-title">DEYSI FEST</h1>
+          <p class="subtitle">@INVIX.LU</p>
+          <p class="subtitle">Los invitados:</p>
+          <ul id="guestList" class="list-unstyled mb-3"></ul>
+        </div>
+
+        <div class="content-section">
+          <!-- Calendar -->
+          <div class="calendar-section">
+            <div class="calendar-container">
+              <div class="calendar-header">
+                <button id="prevMonth" class="btn btn-sm btn-outline-secondary">‹</button>
+                <h4 id="currentMonth">Julio 2025</h4>
+                <button id="nextMonth" class="btn btn-sm btn-outline-secondary">›</button>
+              </div>
+              <div class="calendar-grid" id="calendar">
+                <!-- Calendar will be generated by JavaScript -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Countdown -->
+          <div class="countdown-container pulse">
+            <h2 class="countdown-title">¡FALTAN!</h2>
+            <div class="countdown-timer" id="countdown">
+              <div class="time-unit">
+                <span class="time-number" id="days">00</span>
+                <span class="time-label">Días</span>
+              </div>
+              <div class="time-unit">
+                <span class="time-number" id="hours">00</span>
+                <span class="time-label">Horas</span>
+              </div>
+              <div class="time-unit">
+                <span class="time-number" id="minutes">00</span>
+                <span class="time-label">Minutos</span>
+              </div>
+              <div class="time-unit">
+                <span class="time-number" id="seconds">00</span>
+                <span class="time-label">Segundos</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Event Details -->
+          <div class="event-details">
+            <h2 class="event-title">EVENTO</h2>
+            <div class="event-info">
+              <i class="fas fa-calendar-alt"></i>
+              <span>SÁBADO 5 DE JULIO DEL 2025</span>
+            </div>
+            <div class="event-info">
+              <i class="fas fa-clock"></i>
+              <span>5:00 PM</span>
+            </div>
+            <div class="event-info">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>EDÉN BENAVENTO</span>
+            </div>
+            <a href="#" class="location-btn" onclick="openLocation()">
+              <i class="fas fa-map"></i> VER UBICACIÓN
+            </a>
+          </div>
+
+          <!-- Dress Code -->
+          <div class="dress-code">
+            <h3 class="dress-code-title">
+              <i class="fas fa-tv"></i>
+              Dress code 
+            </h3>
+            <p class="dress-code-text">
+              ¡Revive tu infancia con personajes como:<br>
+              <strong>Bob Esponja, Ben 10, Los Padrinos Mágicos,<br>
+                Kim Possible, Danny Phantom y más!</strong><br><br>
+              Disfrázate o lleva accesorios de tu personaje favorito.
+            </p>
+
+            <div class="ambiente-section">
+              <h4 class="ambiente-title">AMBIENTE</h4>
+              <div class="party-icons">
+                <i class="fas fa-music"></i>
+                <i class="fas fa-cocktail"></i>
+                <i class="fas fa-star"></i>
+              </div>
+              <p class="dress-code-text">
+                <strong>¡ALOCADO!</strong><br>
+                LLEVAR ACTITUD.<br>
+                SI DESEAS APORTAR CON ALGO,<br>
+                PREGUNTA AL ANFITRIÓN DE LA<br>
+                FIESTA.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer-section">
+          <p class="rsvp-text">¡Confirma tu asistencia!</p>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSfoO4Pd0Z1pwgNeH3tATvKb9ZIrwsF8YJGlftEhshe2EcNsnA/viewform?usp=header" target="_blank"
+            class="confirmar-btn">
+            Confirmar Asistencia
+          </a>
+          <p class="contact-info">
+            <i class="fas fa-phone"></i>924 216 329<br>
+            <i class="fas fa-envelope"></i> deysteffgyu@gmail.com
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Variables globales
+    let currentDate = new Date();
+    let currentMonth = 6; // Julio (0-indexed)
+    let currentYear = 2025;
+    const eventDate = new Date('2025-07-05T17:00:00');
+
+    // Crear estrellas animadas
+    function createStars() {
+      const starsContainer = document.getElementById('stars');
+      const numberOfStars = 30;
+
+      for (let i = 0; i < numberOfStars; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.innerHTML = '✨';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.animationDelay = Math.random() * 2 + 's';
+        starsContainer.appendChild(star);
+      }
+    }
+
+    // Generar calendario
+    function generateCalendar(month, year) {
+      const calendar = document.getElementById('calendar');
+      const monthNames = [
+        'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+        'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+      ];
+      const dayNames = ['D', 'L', 'M', 'M', 'J', 'V', 'S'];
+
+      // Actualizar header del mes
+      document.getElementById('currentMonth').textContent = `${monthNames[month]} ${year}`;
+
+      // Limpiar calendario
+      calendar.innerHTML = '';
+
+      // Agregar headers de días
+      dayNames.forEach(day => {
+        const dayHeader = document.createElement('div');
+        dayHeader.className = 'calendar-day-header';
+        dayHeader.textContent = day;
+        calendar.appendChild(dayHeader);
+      });
+
+      // Obtener primer día del mes y número de días
+      const firstDay = new Date(year, month, 1).getDay();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const daysInPrevMonth = new Date(year, month, 0).getDate();
+
+      // Días del mes anterior
+      for (let i = firstDay - 1; i >= 0; i--) {
+        const dayElement = document.createElement('div');
+        dayElement.className = 'calendar-day other-month';
+        dayElement.textContent = daysInPrevMonth - i;
+        calendar.appendChild(dayElement);
+      }
+
+      // Días del mes actual
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dayElement = document.createElement('div');
+        dayElement.className = 'calendar-day';
+        dayElement.textContent = day;
+
+        // Marcar el día del evento
+        if (month === 6 && year === 2025 && day === 5) {
+          dayElement.classList.add('event-day');
+        }
+
+        calendar.appendChild(dayElement);
+      }
+
+      // Días del siguiente mes para completar la grilla
+      const totalCells = calendar.children.length - 7; // Restar headers
+      const remainingCells = 42 - totalCells - 7; // 6 semanas * 7 días - días ya agregados - headers
+
+      for (let day = 1; day <= remainingCells && remainingCells > 0; day++) {
+        const dayElement = document.createElement('div');
+        dayElement.className = 'calendar-day other-month';
+        dayElement.textContent = day;
+        calendar.appendChild(dayElement);
+      }
+    }
+
+    // Navegación del calendario
+    function setupCalendarNavigation() {
+      document.getElementById('prevMonth').addEventListener('click', () => {
+        currentMonth--;
+        if (currentMonth < 0) {
+          currentMonth = 11;
+          currentYear--;
+        }
+        generateCalendar(currentMonth, currentYear);
+      });
+
+      document.getElementById('nextMonth').addEventListener('click', () => {
+        currentMonth++;
+        if (currentMonth > 11) {
+          currentMonth = 0;
+          currentYear++;
+        }
+        generateCalendar(currentMonth, currentYear);
+      });
+    }
+
+    // Countdown timer
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = eventDate.getTime() - now;
+
+      if (distance > 0) {
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById('days').textContent = days.toString().padStart(2, '0');
+        document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+        document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+        document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+      } else {
+        document.getElementById('countdown').innerHTML = '<h3>¡Es hora de la fiesta! 🎉</h3>';
+      }
+    }
+
+    // Función para abrir ubicación
+    function openLocation() {
+      const address = "Edén Benavento";
+      const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
+      window.open(googleMapsUrl, '_blank');
+    }
+
+    // Inicializar
+    document.addEventListener('DOMContentLoaded', function () {
+      createStars();
+      generateCalendar(currentMonth, currentYear);
+      setupCalendarNavigation();
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+      renderGuestList();
+    });
+
+    // Lista de asistentes (actualiza manualmente)
+      const asistentes = [
+        "Deysi Obvioooo",
+        'Su "hermoso" novio, Eliot',
+      ];
+
+      // Mostrar en la sección "Los invitados"
+      function renderGuestList() {
+        const guestList = document.getElementById("guestList");
+        asistentes.forEach(nombre => {
+          const li = document.createElement("li");
+          li.textContent = `🎉 ${nombre}`;
+          guestList.appendChild(li);
+        });
+      }
+
+
+
+    // Efectos de hover para las tarjetas
+    document.querySelectorAll('.countdown-container, .event-details, .dress-code, .calendar-section').forEach(card => {
+      card.addEventListener('mouseenter', function () {
+        this.style.transform = 'translateY(-3px)';
+        this.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.1)';
+      });
+
+      card.addEventListener('mouseleave', function () {
+        this.style.transform = 'translateY(0)';
+        this.style.boxShadow = '';
+      });
+    });
+
+
+
+  </script>
+</body>
+
+</html>
